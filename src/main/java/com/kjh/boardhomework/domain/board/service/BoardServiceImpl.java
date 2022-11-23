@@ -1,7 +1,7 @@
 package com.kjh.boardhomework.domain.board.service;
 
 import com.kjh.boardhomework.domain.board.entity.BoardEntity;
-import com.kjh.boardhomework.domain.board.exception.NoSuchFeedException;
+import com.kjh.boardhomework.domain.board.exception.NoSuchBoardException;
 import com.kjh.boardhomework.domain.board.presentation.dto.request.BoardEditRequest;
 import com.kjh.boardhomework.domain.board.presentation.dto.response.BoardInfoResponse;
 import com.kjh.boardhomework.domain.board.presentation.dto.response.BoardResponse;
@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public BoardInfoResponse getBoardById(Long feedId) {
         BoardEntity feed = boardRepository.findById(feedId)
-                .orElseThrow(() -> NoSuchFeedException.EXCEPTION);
+                .orElseThrow(() -> NoSuchBoardException.EXCEPTION);
 
         feed.addReadCount();
         return BoardInfoResponse.builder()
@@ -68,7 +68,7 @@ public class BoardServiceImpl implements BoardService{
             boardRepository.save(board);
         } else {
             BoardEntity original = boardRepository.findById(feedId)
-                            .orElseThrow(() -> NoSuchFeedException.EXCEPTION);
+                            .orElseThrow(() -> NoSuchBoardException.EXCEPTION);
 
             original.update(request.getTitle(), request.getContent());
         }
@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public void deleteBoard(Long feedId) {
         BoardEntity feed = boardRepository.findById(feedId)
-                .orElseThrow(() -> NoSuchFeedException.EXCEPTION);
+                .orElseThrow(() -> NoSuchBoardException.EXCEPTION);
 
         boardRepository.delete(feed);
     }

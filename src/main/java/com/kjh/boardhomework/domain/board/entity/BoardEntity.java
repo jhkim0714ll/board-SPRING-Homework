@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Getter
 @Entity(name = "board_entity")
 @NoArgsConstructor
-@AllArgsConstructor
 public class BoardEntity {
 
 
