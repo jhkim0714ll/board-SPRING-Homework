@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Board</title>
+  <link href="/css/style.css" rel="stylesheet" />
+</head>
+
+<div th:replace="global/nav :: header"></div>
+
+<body>
+<div th:replace="global/nav :: nav"></div>
+
+
+  <div class="page">
+    <div class="write">
+      <br><br>
+    <header class="head">
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="site-heading">
+              <h1 th:if="${original == 'write'}">게시글 작성</h1>
+              <h1 th:if="${original == 'update'}">게시글 수정</h1>
+              <h1 th:if="${original == 'view'}">게시글</h1>
+              <h1 th:if="${original == 'list'}">게시판</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="input">
+      <form method="post" th:object="${boardEditRequest}">
+        <div class="input-object">
+          <input id="id" type="hidden" name="id" th:value="${id}">
+          <div class="title">
+            <label>제목</label><br>
+            <input id="title" th:value="${board.getTitle()}" required type="text" maxlength="100"
+                   autofocus="autofocus" name="title">
+          </div>
+
+          <div class="author">
+            <label>작성자</label><br>
+            <input id="author" th:value="${board.getAuthor()}" required type="text" maxlength="50"
+                   name="author">
+          </div>
+
+          <div class="content">
+            <label>내용</label><br>
+            <textarea id="content" th:value="${board.getContent()}"  th:text="${board.getContent()}"
+                      required type="text" maxlength="1000" name="content"></textarea>
+          </div>
+        </div>
+
+        <div class="button-div">
+          <button class="button" onclick="checkText()">등록</button>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
+  <br><br>
+
+  <div th:replace="global/nav :: footer"></div>
+</div>
+
+<script>
+  function checkText() {
+    const title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const content = document.getElementById("content").value;
+    const id = document.getElementById("id").value;
+
+    if(!title || !author || !content) {
+      alert("모든 칸을 입력해주세요");
+      window.location.href=`./${id}`;
+    }
+  }
+</script>
+</body>
+</html>

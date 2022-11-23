@@ -1,0 +1,137 @@
+.page {
+    display: flex;
+    justify-content: center;
+
+}
+
+.write {
+    width: 990px;
+    margin: 0;
+    flex-direction: column;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: white;
+}
+
+.post-head {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 0;
+    background-color: white;
+}
+
+.ui-list {
+    height: 500px;
+}
+
+.list {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    background-color: white;
+}
+
+.list .list-object {
+    border: solid #D9D9D9;
+}
+
+.list ul{
+    display: flex;
+    height: 30px;
+}
+
+.list ul li {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    list-style: none;
+    width: 190px;
+}
+
+.post-object{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: white;
+    flex-direction: column;
+}
+
+.input-object {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    flex-direction: column;
+}
+
+.title input{
+    width: 1000px;
+    height: 30px;
+    border: solid #D9D9D9;
+}
+
+.author input{
+    width: 1000px;
+    height: 30px;
+    border: solid #D9D9D9;
+}
+
+.content input{
+    width: 1000px;
+    height: 500px;
+    border: solid #D9D9D9;
+}
+
+.button-div {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+.button {
+    background-color: rgba(98, 169, 255, 0.53);
+    width: 80px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid #D9D9D9;
+    border-radius: 2px;
+}
+
+.content-div {
+    display: flex;
+    height: 400px;
+    border: solid #D9D9D9;
+    border-radius: 2px;
+}
+
+.content-div p{
+    word-break: break-all;
+}
+
+.content input {
+    word-break: break-all;
+}
+
+textarea {
+    resize: none;
+    width: 1007px;
+    height: 250px;
+}

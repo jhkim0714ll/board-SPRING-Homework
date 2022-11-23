@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/nav.css" rel="stylesheet" />
+    <title>Nav Bar</title>
+</head>
+
+<nav class="navbar" th:fragment="nav">
+
+    <div class="navbar__logo">
+        <i class="fas fa-blog"></i>
+        <h1><a href="/list">게시판 수행평가</a></h1>
+    </div>
+
+    <ul class="navbar__menu">
+        <li><a href="/list">회원가입</a></li>
+        <li><a href="/list">로그인</a></li>
+    </ul>
+</nav>
+
+<footer class="border-top" th:fragment="footer">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="small text-center text-muted fst-italic">Made By Kim Junho 2022</div>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

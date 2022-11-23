@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+
+<div th:replace="global/nav :: header"></div>
+
+<body>
+<div th:replace="global/nav :: nav"></div>
+
+<div class="page">
+<div class="write">
+    <header class="head">
+        <br><br>
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1 th:if="${original == 'write'}">게시글 작성</h1>
+                        <h1 th:if="${original == 'update'}">게시글 수정</h1>
+                        <h1 th:if="${original == 'view'}">게시글</h1>
+                        <h1 th:if="${original == 'list'}">게시판</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="input">
+        <form method="post" th:object="${boardEditRequest}">
+            <div class="input-object">
+                <input type="hidden" name="id" th:value="${id}">
+                    <div class="title">
+                        <label>제목</label><br>
+                        <input id="title" required type="text" maxlength="100"
+                               autofocus="autofocus" placeholder="제목을 입력해주세요" name="title" th:field="*{title}">
+                    </div>
+
+                    <div class="author">
+                        <label>작성자</label><br>
+                        <input id="author" required type="text" maxlength="50"
+                               placeholder="작성자를 입력해주세요" name="author" th:field="*{author}">
+                    </div>
+
+                    <div class="content">
+                        <label>내용</label><br>
+                        <textarea id="content" required type="text" maxlength="1000"
+                                  placeholder="내용을 입력해주세요" name="content" th:field="*{content}"></textarea>
+                    </div>
+
+                    <div class="button-div">
+                        <button class="button" onclick="checkText()">등록</button>
+                    </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</div>
+
+<br><br>
+
+<div th:replace="global/nav :: footer"></div>
+</body>
+
+<script>
+    function checkText() {
+        var title = document.getElementById("title").value;
+        const author = document.getElementById("author").value;
+        const content = document.getElementById("content").value;
+
+        if(!title || !author || !content) {
+            alert("모든 칸을 입력해주세요");
+            window.location.href="./write";
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <link href="/css/style.css" rel="stylesheet" />
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<div th:replace="global/nav :: header"></div>
+
+<body>
+<div th:replace="global/nav :: nav"></div>
+
+    <div class="page">
+        <div class="write">
+            <br><br>
+
+            <header class="post-head">
+                <meta charset="UTF-8">
+                <div>
+                    <h1 th:text="|제목. ${board.getTitle()}|"></h1>
+                    <span class="subheading" th:text="| No. ${board.getId()} / 작성자. ${board.getAuthor()} / 작성일시. ${board.getCreatedAt()} / 조회수 ${board.getReadCount()} 회|"></span>
+                </div>
+            </header>
+
+            <br><br>
+
+            <main>
+                <h3>내용</h3>
+                <div class="content-div">
+                    <p th:text="${board.getContent()}"></p>
+                </div>
+                <div class="button-div">
+                    <a class="button" th:href="|/list|">목록</a>
+                    <a class="button" th:href="|/update/${board.getId()}|">수정</a>
+                    <a class="button" onclick="deleteBoard()">삭제</a>
+                </div>
+            </main>
+
+            <br><br>
+        </div>
+    </div>
+<div th:replace="global/nav :: footer"></div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+    function deleteBoard() {
+        const id = [[${board.getId()}]];
+
+        $.ajax({
+            url:`/delete/${id}`,
+            type: 'DELETE'
+        }).then(res => {
+            alert('성공적으로 삭제되었습니다')
+            window.location.href = '/list'
+        });
+    }
+</script>
+</html>
