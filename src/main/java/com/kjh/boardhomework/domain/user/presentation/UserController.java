@@ -1,6 +1,7 @@
 package com.kjh.boardhomework.domain.user.presentation;
 
 import com.kjh.boardhomework.domain.board.presentation.dto.request.BoardEditRequest;
+import com.kjh.boardhomework.domain.user.presentation.dto.request.JoinRequest;
 import com.kjh.boardhomework.domain.user.presentation.dto.request.LoginRequest;
 import com.kjh.boardhomework.domain.user.presentation.dto.response.LoginResponse;
 import com.kjh.boardhomework.domain.user.service.UserService;
@@ -42,7 +43,7 @@ public class UserController {
                         Model model
     ) {
         if(bindingResult.hasErrors()) {
-            model.addAttribute("boardEditRequest", loginRequest);
+            model.addAttribute("loginRequest", loginRequest);
             return "user/login";
         }
 
@@ -50,5 +51,24 @@ public class UserController {
 
         model.addAttribute("isLogin", token);
         return "redirect:/list";
+    }
+
+    @GetMapping("/register")
+    public String registerPage(@ModelAttribute("joinRequest") JoinRequest joinRequest,
+                               BindingResult bindingResult,
+                               Model model
+    ){
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("joinRequest", joinRequest);
+            return "user/register";
+        }
+
+        userService.register(joinRequest);
+        return "redirect:/user/login";
+    }
+
+    @GetMapping("/register")
+    public String register(){
+        return "redirect:/user/login";
     }
 }
