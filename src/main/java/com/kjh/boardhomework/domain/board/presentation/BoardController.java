@@ -21,7 +21,7 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public String writeFeedPage(
+    public String writeBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
                                 Model model
     ) {
@@ -32,7 +32,7 @@ public class BoardController {
     }
 
     @PostMapping(value = "/write")
-    public String writeFeed(
+    public String writeBoard(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
                             BindingResult bindingResult,
                             Model model
@@ -50,7 +50,7 @@ public class BoardController {
     }
 
     @GetMapping("/update/{boardId}")
-    public String updateFeedPage(
+    public String updateBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
             @PathVariable(required = false) Long boardId,
                                  Model model
@@ -64,7 +64,7 @@ public class BoardController {
     }
 
     @PostMapping("/update/{boardId}")
-    public String updateFeed(
+    public String updateBoard(
             @PathVariable(required = false) Long boardId,
                              @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
                              BindingResult bindingResult,
@@ -83,14 +83,14 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String listFeedPage(Model model) {
+    public String listBoardPage(Model model) {
         model.addAttribute("list", boardService.listAllBoard());
         model.addAttribute("original", "list");
         return "board/list";
     }
 
     @GetMapping("/view/{boardId}")
-    public String viewFeedPage(@PathVariable Long boardId, Model model) {
+    public String viewBoardPage(@PathVariable Long boardId, Model model) {
         BoardInfoResponse boardInfoResponse = boardService.getBoardById(boardId);
         model.addAttribute("title", String.format("게시글: %s", boardInfoResponse.getTitle()));
         model.addAttribute("board", boardInfoResponse);
@@ -99,7 +99,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/delete/{boardId}")
-    public @ResponseBody void deleteFeed(@PathVariable Long boardId) {
+    public @ResponseBody void deleteBoard(@PathVariable Long boardId) {
         boardService.deleteBoard(boardId);
     }
 }
