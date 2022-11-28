@@ -1,18 +1,18 @@
 package com.kjh.boardhomework.domain.user.presentation;
 
-import com.kjh.boardhomework.domain.board.presentation.dto.request.BoardEditRequest;
-import com.kjh.boardhomework.domain.user.presentation.dto.request.JoinRequest;
+import com.kjh.boardhomework.domain.user.presentation.dto.request.RegisterRequest;
 import com.kjh.boardhomework.domain.user.presentation.dto.request.LoginRequest;
-import com.kjh.boardhomework.domain.user.presentation.dto.response.LoginResponse;
 import com.kjh.boardhomework.domain.user.service.UserService;
+import com.kjh.boardhomework.global.annotation.AuthorizationCheck;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/user")
@@ -22,53 +22,54 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String loginPage(
-            @ModelAttribute("loginRequest") LoginRequest loginRequest,
-            BindingResult bindingResult,
-            Model model) {
-
-
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("loginRequest", new LoginRequest());
-            return "user/login";
-        }
-        userService.login(loginRequest);
-        return "redirect:/list";
+    public String loginPage() {
+        return "user/login";
     }
 
     @PostMapping("/login")
     public String login(
-            @ModelAttribute("loginRequest") LoginRequest loginRequest,
-                        BindingResult bindingResult,
-                        Model model
+            HttpServletResponse response,
+            @RequestParam("id") String id,
+            @RequestParam("password") String password
     ) {
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("loginRequest", loginRequest);
-            return "user/login";
-        }
+
+        LoginRequest loginRequest = new LoginRequest(id, password);
 
         String token = userService.login(loginRequest);
 
-        model.addAttribute("isLogin", token);
+        Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return "redirect:/list";
     }
 
-    @GetMapping("/register")
-    public String registerPage(@ModelAttribute("joinRequest") JoinRequest joinRequest,
-                               BindingResult bindingResult,
-                               Model model
-    ){
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("joinRequest", joinRequest);
-            return "user/register";
+    @AuthorizationCheck
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
         }
-
-        userService.register(joinRequest);
         return "redirect:/user/login";
     }
 
+
     @GetMapping("/register")
-    public String register(){
+    public String registerPage(){
+        return "user/register";
+    }
+
+    @PostMapping("/register")
+    public String register(
+            @RequestParam("id") String id,
+            @RequestParam("name") String name,
+            @RequestParam("password") String password
+    ){
+        RegisterRequest registerRequest = new RegisterRequest(id, name, password);
+        userService.register(registerRequest);
         return "redirect:/user/login";
     }
 }

@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/nav.css" rel="stylesheet" />
     <title>Nav Bar</title>
+    <style>
+        li {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <nav class="navbar" th:fragment="nav">
@@ -17,8 +22,8 @@
     </div>
 
     <ul class="navbar__menu">
-        <li><a href="/list">회원가입</a></li>
-        <li><a href="/list">로그인</a></li>
+        <li id="registerButton" onclick="window.location.href='/user/register'"><a>회원가입</a></li>
+        <li id="loginButton" onclick="window.location.href='/user/login'"><a>로그인</a></li>
     </ul>
 </nav>
 

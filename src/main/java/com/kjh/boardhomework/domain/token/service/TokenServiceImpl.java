@@ -31,7 +31,7 @@ public class TokenServiceImpl implements TokenService{
         Date expiredAt = new Date();
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("member", memberId);
+        claims.put("user", memberId);
 
         return Jwts.builder()
                 .setClaims(claims)

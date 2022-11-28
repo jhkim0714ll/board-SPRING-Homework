@@ -11,7 +11,7 @@
   </head>
   <body>
     <div>
-      <form method="post" th:object="${loginRequest}">
+      <form method="post">
         <input
           id="id"
           required
@@ -20,7 +20,7 @@
           autofocus="autofocus"
           placeholder="아이디를 입력해주세요"
           name="id"
-          th:field="*{id}"
+          th:value="*{id}"
         />
         <input
           id="password"
@@ -28,10 +28,11 @@
           type="text"
           maxlength="100"
           autofocus="autofocus"
-          placeholder="아이디를 입력해주세요"
+          placeholder="비밀번호를 입력해주세요"
           name="password"
-          th:field="*{password}"
+          th:value="*{password}"
         />
+        <button>로그인</button>
       </form>
     </div>
   </body>

@@ -1,11 +1,13 @@
 package com.kjh.boardhomework.domain.user.presentation.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class JoinRequest {
+@AllArgsConstructor
+public class RegisterRequest {
 
     private String id;
     private String name;

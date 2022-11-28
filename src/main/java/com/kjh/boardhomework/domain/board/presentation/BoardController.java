@@ -3,6 +3,7 @@ package com.kjh.boardhomework.domain.board.presentation;
 import com.kjh.boardhomework.domain.board.presentation.dto.request.BoardEditRequest;
 import com.kjh.boardhomework.domain.board.presentation.dto.response.BoardInfoResponse;
 import com.kjh.boardhomework.domain.board.service.BoardService;
+import com.kjh.boardhomework.global.annotation.AuthorizationCheck;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class BoardController {
         return "redirect:/list";
     }
 
+    @AuthorizationCheck
     @GetMapping("/write")
     public String writeBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
@@ -31,6 +33,7 @@ public class BoardController {
         return "board/write";
     }
 
+    @AuthorizationCheck
     @PostMapping(value = "/write")
     public String writeBoard(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
@@ -49,6 +52,7 @@ public class BoardController {
         return "redirect:/list";
     }
 
+    @AuthorizationCheck
     @GetMapping("/update/{boardId}")
     public String updateBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
@@ -63,6 +67,7 @@ public class BoardController {
         return "board/update";
     }
 
+    @AuthorizationCheck
     @PostMapping("/update/{boardId}")
     public String updateBoard(
             @PathVariable(required = false) Long boardId,
@@ -82,6 +87,7 @@ public class BoardController {
         return "redirect:/list";
     }
 
+    @AuthorizationCheck
     @GetMapping("/list")
     public String listBoardPage(Model model) {
         model.addAttribute("list", boardService.listAllBoard());
@@ -89,6 +95,7 @@ public class BoardController {
         return "board/list";
     }
 
+    @AuthorizationCheck
     @GetMapping("/view/{boardId}")
     public String viewBoardPage(@PathVariable Long boardId, Model model) {
         BoardInfoResponse boardInfoResponse = boardService.getBoardById(boardId);
@@ -98,6 +105,7 @@ public class BoardController {
         return "board/view";
     }
 
+    @AuthorizationCheck
     @DeleteMapping("/delete/{boardId}")
     public @ResponseBody void deleteBoard(@PathVariable Long boardId) {
         boardService.deleteBoard(boardId);

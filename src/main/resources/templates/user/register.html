@@ -1,13 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
-<body>
-
-</body>
+  </head>
+  <body>
+    <form method="post">
+      <input
+        id="id"
+        required
+        type="text"
+        maxlength="100"
+        autofocus="autofocus"
+        placeholder="아이디를 입력해주세요"
+        name="id"
+        th:value="*{id}"
+      />
+      <input
+        id="name"
+        required
+        type="text"
+        placeholder="비밀번호를 입력해주세요"
+        name="name"
+        th:value="*{name}"
+      />
+      <input
+        id="password"
+        required
+        type="text"
+        placeholder="비밀번호를 입력해주세요"
+        name="password"
+        th:value="*{password}"
+      />
+      <button>회원가입</button>
+    </form>
+  </body>
 </html>

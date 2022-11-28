@@ -5,7 +5,7 @@ import com.kjh.boardhomework.domain.user.entity.UserEntity;
 import com.kjh.boardhomework.domain.user.exception.UserIdIsAlreadyException;
 import com.kjh.boardhomework.domain.user.exception.UserNotFoundException;
 import com.kjh.boardhomework.domain.user.exception.WrongPasswordException;
-import com.kjh.boardhomework.domain.user.presentation.dto.request.JoinRequest;
+import com.kjh.boardhomework.domain.user.presentation.dto.request.RegisterRequest;
 import com.kjh.boardhomework.domain.user.presentation.dto.request.LoginRequest;
 import com.kjh.boardhomework.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,15 +31,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void register(JoinRequest joinRequest) {
-        if(userRepository.existsById(joinRequest.getId())) {
+    public void register(RegisterRequest registerRequest) {
+        if(userRepository.existsById(registerRequest.getId())) {
             throw UserIdIsAlreadyException.EXCEPTION;
         }
 
         UserEntity user = UserEntity.builder()
-                .id(joinRequest.getId())
-                .name(joinRequest.getName())
-                .password(joinRequest.getPassword()).build();
+                .id(registerRequest.getId())
+                .name(registerRequest.getName())
+                .password(registerRequest.getPassword()).build();
         userRepository.save(user);
     }
 }
