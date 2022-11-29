@@ -13,12 +13,13 @@ public class AuthorizationExtractor {
 
     public String extract(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals("token")) {
-                return cookie.getValue();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    return cookie.getValue();
+                }
             }
         }
-
         return Strings.EMPTY;
     }
 }

@@ -3,12 +3,15 @@ package com.kjh.boardhomework.domain.board.presentation;
 import com.kjh.boardhomework.domain.board.presentation.dto.request.BoardEditRequest;
 import com.kjh.boardhomework.domain.board.presentation.dto.response.BoardInfoResponse;
 import com.kjh.boardhomework.domain.board.service.BoardService;
+import com.kjh.boardhomework.domain.user.entity.UserEntity;
 import com.kjh.boardhomework.global.annotation.AuthorizationCheck;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +28,8 @@ public class BoardController {
     @GetMapping("/write")
     public String writeBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
-                                Model model
+            Model model,
+            HttpServletRequest request
     ) {
         model.addAttribute("title", "게시글 작성");
         model.addAttribute("original", "write");
@@ -37,8 +41,9 @@ public class BoardController {
     @PostMapping(value = "/write")
     public String writeBoard(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
-                            BindingResult bindingResult,
-                            Model model
+            BindingResult bindingResult,
+            Model model,
+            HttpServletRequest request
     ) {
         model.addAttribute("title", "게시글 작성");
         model.addAttribute("original", "write");
@@ -89,7 +94,11 @@ public class BoardController {
 
     @AuthorizationCheck
     @GetMapping("/list")
-    public String listBoardPage(Model model) {
+    public String listBoardPage(
+            Model model,
+            @RequestAttribute("user") UserEntity user
+    ) {
+        model.addAttribute("user", user);
         model.addAttribute("list", boardService.listAllBoard());
         model.addAttribute("original", "list");
         return "board/list";

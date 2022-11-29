@@ -24,6 +24,7 @@ public class TokenServiceImpl implements TokenService{
     private final UserRepository userRepository;
 
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+    private final long expire = 1000 * 60 * 60 * 24 * 7;
 
 
     @Override
@@ -32,6 +33,8 @@ public class TokenServiceImpl implements TokenService{
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("user", memberId);
+
+        expiredAt = new Date(expiredAt.getTime() + expire);
 
         return Jwts.builder()
                 .setClaims(claims)

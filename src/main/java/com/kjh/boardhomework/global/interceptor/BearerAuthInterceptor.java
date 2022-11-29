@@ -2,6 +2,7 @@ package com.kjh.boardhomework.global.interceptor;
 
 import com.kjh.boardhomework.domain.token.service.TokenService;
 import com.kjh.boardhomework.domain.user.entity.UserEntity;
+import com.kjh.boardhomework.domain.user.presentation.exception.TokenExpiredException;
 import com.kjh.boardhomework.global.Extractor.AuthorizationExtractor;
 import com.kjh.boardhomework.global.annotation.AuthorizationCheck;
 import lombok.AllArgsConstructor;
@@ -34,12 +35,9 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
         }
 
         String token = authExtractor.extract(request);
-        if (token == null || token.length() == 0) {
-            return true;
-        }
 
         if (tokenService.verifyToken(token) == null) {
-            throw new IllegalArgumentException("유효하지 않은 토큰");
+            throw TokenExpiredException.EXCEPTION;
         }
 
         UserEntity user= tokenService.verifyToken(token);
