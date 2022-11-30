@@ -40,12 +40,6 @@
                                autofocus="autofocus" placeholder="제목을 입력해주세요" name="title" th:field="*{title}">
                     </div>
 
-                    <div class="author">
-                        <label>작성자</label><br>
-                        <input id="author" required type="text" maxlength="50"
-                               placeholder="작성자를 입력해주세요" name="author" th:field="*{author}">
-                    </div>
-
                     <div class="content">
                         <label>내용</label><br>
                         <textarea id="content" required type="text" maxlength="1000"
@@ -70,7 +64,6 @@
 <script>
     function checkText() {
         var title = document.getElementById("title").value;
-        const author = document.getElementById("author").value;
         const content = document.getElementById("content").value;
 
         if(!title || !author || !content) {

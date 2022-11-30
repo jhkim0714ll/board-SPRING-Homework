@@ -1,5 +1,6 @@
 package com.kjh.boardhomework.domain.board.presentation.dto.request;
 
+import com.kjh.boardhomework.domain.user.entity.UserEntity;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -17,7 +18,7 @@ public class BoardEditRequest {
 
     @NotBlank(message = "글쓴이 이름은 비어있을 수 없습니다")
     @Size(max = 50, message = "글쓴이 이름은 최대 50자까지만 가능합니다")
-    private String author;
+    private UserEntity author;
 
     @NotBlank(message = "내용은 비어있을 수 없습니다")
     @Size(max = 1000, message = "게시글 내용은 최대 1,000자까지만 가능합니다")

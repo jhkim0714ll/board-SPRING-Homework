@@ -1,14 +1,12 @@
 package com.kjh.boardhomework.domain.user.service;
 
-import com.kjh.boardhomework.domain.token.service.TokenService;
 import com.kjh.boardhomework.domain.user.entity.UserEntity;
-import com.kjh.boardhomework.domain.user.exception.UserIdIsAlreadyException;
-import com.kjh.boardhomework.domain.user.exception.UserNotFoundException;
-import com.kjh.boardhomework.domain.user.exception.WrongPasswordException;
 import com.kjh.boardhomework.domain.user.presentation.dto.request.RegisterRequest;
 import com.kjh.boardhomework.domain.user.presentation.dto.request.LoginRequest;
 import com.kjh.boardhomework.domain.user.repository.UserRepository;
+import com.kjh.boardhomework.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,30 +14,36 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-    private final TokenService tokenService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public String login(LoginRequest loginRequest) {
         if(!userRepository.existsById(loginRequest.getId())) {
-            throw UserNotFoundException.EXCEPTION;
+            return "IdNotFound";
         }
 
-        UserEntity user = userRepository.findByIdAndPassword(loginRequest.getId(), loginRequest.getPassword())
-                .orElseThrow(() -> WrongPasswordException.EXCEPTION);
-        return tokenService.generateToken(user.getId());
+        String password = passwordEncoder.encode(loginRequest.getPassword());
+        UserEntity user = userRepository.findByIdAndPassword(loginRequest.getId(), password);
+        if(user == null) {
+            return "wrongPassword";
+        }
+        return jwtTokenProvider.generateAccessToken(user.getId());
     }
 
     @Override
-    public void register(RegisterRequest registerRequest) {
+    public String register(RegisterRequest registerRequest) {
         if(userRepository.existsById(registerRequest.getId())) {
-            throw UserIdIsAlreadyException.EXCEPTION;
+            return "alreadyExistsId";
         }
 
+        String password = passwordEncoder.encode(registerRequest.getPassword());
         UserEntity user = UserEntity.builder()
                 .id(registerRequest.getId())
                 .name(registerRequest.getName())
-                .password(registerRequest.getPassword()).build();
+                .password(password).build();
         userRepository.save(user);
+        return "";
     }
 }

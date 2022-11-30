@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public class TokenServerException extends CustomException {
     private TokenServerException() {
-        super(HttpStatus.INTERNAL_SERVER_ERROR, "토큰 해석 중 에러 발생했습니다");
+        super(UserErrorCode.TOKEN_SERVER_EXCEPTION);
     }
 
     public static final CustomException EXCEPTION = new TokenServerException();

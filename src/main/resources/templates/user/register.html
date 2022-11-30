@@ -10,7 +10,10 @@
     <title>Document</title>
   </head>
   <body>
-    <form method="post">
+    <script th:if="${alreadyExistsId != null}">
+      alert("아이디가 이미 존재합니다, 다른 아이디로 가입해주세요");
+    </script>
+    <form method="post" action="/user/register">
       <input
         id="id"
         required
@@ -25,19 +28,19 @@
         id="name"
         required
         type="text"
-        placeholder="비밀번호를 입력해주세요"
+        placeholder="이름을 입력해주세요"
         name="name"
         th:value="*{name}"
       />
       <input
         id="password"
         required
-        type="text"
+        type="password"
         placeholder="비밀번호를 입력해주세요"
         name="password"
         th:value="*{password}"
       />
-      <button>회원가입</button>
+      <button onclick="window.location.href='/user/register'">회원가입</button>
     </form>
   </body>
 </html>

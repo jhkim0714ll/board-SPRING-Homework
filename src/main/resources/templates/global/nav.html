@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head th:fragment="header">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head th:fragment="header">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/nav.css" rel="stylesheet" />
     <title>Nav Bar</title>
     <style>
-        li {
-            cursor: pointer;
-        }
+      li {
+        cursor: pointer;
+      }
     </style>
-</head>
+  </head>
 
-<nav class="navbar" th:fragment="nav">
-
+  <nav class="navbar" th:fragment="nav">
     <div class="navbar__logo">
-        <i class="fas fa-blog"></i>
-        <h1><a href="/list">게시판 수행평가</a></h1>
+      <i class="fas fa-blog"></i>
+      <h1><a href="/list">게시판 수행평가</a></h1>
     </div>
 
     <ul class="navbar__menu">
-        <li id="registerButton" onclick="window.location.href='/user/register'"><a>회원가입</a></li>
-        <li id="loginButton" onclick="window.location.href='/user/login'"><a>로그인</a></li>
+      <li id="registerButton" onclick="window.location.href='/user/register'">
+        <a>회원가입</a>
+      </li>
+      <li
+        id="loginButton"
+        th:if="${login == false}"
+        onclick="window.location.href='/user/login'"
+      >
+        <a>로그인</a>
+      </li>
+      <li
+        id="logoutButton"
+        th:if="${login == true}"
+        onclick="logout()"
+      >
+        <a>로그아웃</a>
+      </li>
     </ul>
-</nav>
 
-<footer class="border-top" th:fragment="footer">
+    <script>
+      function logout() {
+        document.cookie = "token=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
+        window.location.href='/user/logout'
+      }
+    </script>
+  </nav>
+
+  <footer class="border-top" th:fragment="footer">
     <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="small text-center text-muted fst-italic">Made By Kim Junho 2022</div>
-            </div>
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <div class="small text-center text-muted fst-italic">
+            Made By Kim Junho 2022
+          </div>
         </div>
+      </div>
     </div>
-</footer>
+  </footer>
 </html>

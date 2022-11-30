@@ -4,7 +4,7 @@ import com.kjh.boardhomework.domain.board.presentation.dto.request.BoardEditRequ
 import com.kjh.boardhomework.domain.board.presentation.dto.response.BoardInfoResponse;
 import com.kjh.boardhomework.domain.board.service.BoardService;
 import com.kjh.boardhomework.domain.user.entity.UserEntity;
-import com.kjh.boardhomework.global.annotation.AuthorizationCheck;
+import com.kjh.boardhomework.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 public class BoardController {
 
     private final BoardService boardService;
+    private final UserFacade userFacade;
 
     @GetMapping
     public String mainPage() {
         return "redirect:/list";
     }
 
-    @AuthorizationCheck
     @GetMapping("/write")
     public String writeBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
@@ -37,7 +37,6 @@ public class BoardController {
         return "board/write";
     }
 
-    @AuthorizationCheck
     @PostMapping(value = "/write")
     public String writeBoard(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
@@ -45,6 +44,7 @@ public class BoardController {
             Model model,
             HttpServletRequest request
     ) {
+        UserEntity user = userFacade.getCurrentUser();
         model.addAttribute("title", "게시글 작성");
         model.addAttribute("original", "write");
 
@@ -52,18 +52,20 @@ public class BoardController {
             model.addAttribute("boardEditRequest", boardEditRequest);
             return "board/write";
         }
+        boardEditRequest.setAuthor(user);
 
         boardService.editBoard(boardEditRequest, null);
         return "redirect:/list";
     }
 
-    @AuthorizationCheck
     @GetMapping("/update/{boardId}")
     public String updateBoardPage(
             @ModelAttribute("boardEditRequest") BoardEditRequest boardEditRequest,
             @PathVariable(required = false) Long boardId,
                                  Model model
     ) {
+        UserEntity user = userFacade.getCurrentUser();
+
         model.addAttribute("board", boardService.getBoardById(boardId));
         model.addAttribute("title", "게시글 수정");
         model.addAttribute("id", boardId);
@@ -72,7 +74,6 @@ public class BoardController {
         return "board/update";
     }
 
-    @AuthorizationCheck
     @PostMapping("/update/{boardId}")
     public String updateBoard(
             @PathVariable(required = false) Long boardId,
@@ -92,19 +93,22 @@ public class BoardController {
         return "redirect:/list";
     }
 
-    @AuthorizationCheck
     @GetMapping("/list")
     public String listBoardPage(
             Model model,
-            @RequestAttribute("user") UserEntity user
+            HttpServletRequest request
     ) {
-        model.addAttribute("user", user);
+        UserEntity user = userFacade.getCurrentUser();
+        if(user == null) {
+            model.addAttribute("login", false);
+        } else {
+            model.addAttribute("login", true);
+        }
         model.addAttribute("list", boardService.listAllBoard());
         model.addAttribute("original", "list");
         return "board/list";
     }
 
-    @AuthorizationCheck
     @GetMapping("/view/{boardId}")
     public String viewBoardPage(@PathVariable Long boardId, Model model) {
         BoardInfoResponse boardInfoResponse = boardService.getBoardById(boardId);
@@ -114,7 +118,6 @@ public class BoardController {
         return "board/view";
     }
 
-    @AuthorizationCheck
     @DeleteMapping("/delete/{boardId}")
     public @ResponseBody void deleteBoard(@PathVariable Long boardId) {
         boardService.deleteBoard(boardId);

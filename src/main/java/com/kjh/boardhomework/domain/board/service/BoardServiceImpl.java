@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService{
         if(feedId == null) {
             BoardEntity board = BoardEntity.builder()
                     .title(request.getTitle())
-                    .authorName(request.getAuthor())
+                    .authorName(request.getAuthor().getName())
                     .content(request.getContent())
                     .readCount(0)
                     .build();

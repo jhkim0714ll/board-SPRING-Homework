@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Board</title>
+    <link href="/css/style.css" rel="stylesheet" />
+    <style>
+      a {
+        cursor: pointer;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Board</title>
-  <link href="/css/style.css" rel="stylesheet" />
-  <style>
-    a {
-      cursor: pointer;
-    }
-  </style>
-</head>
+  <div th:replace="global/nav :: header"></div>
 
-<div th:replace="global/nav :: header"></div>
-
-<body>
-  <div th:replace="global/nav :: nav"></div>
-
+  <body>
+    <div th:replace="global/nav :: nav"></div>
 
     <div class="page">
       <div class="write">
-        <br><br>
+        <br /><br />
         <header class="head">
-        <div class="container position-relative px-4 px-lg-5">
-          <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-              <div class="site-heading">
-                <h1 th:if="${original == 'write'}">게시글 작성</h1>
-                <h1 th:if="${original == 'update'}">게시글 수정</h1>
-                <h1 th:if="${original == 'view'}">게시글</h1>
-                <h1 th:if="${original == 'list'}">게시판</h1>
+          <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+              <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                  <h1 th:if="${original == 'write'}">게시글 작성</h1>
+                  <h1 th:if="${original == 'update'}">게시글 수정</h1>
+                  <h1 th:if="${original == 'view'}">게시글</h1>
+                  <h1 th:if="${original == 'list'}">게시판</h1>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </header>
-
 
         <div class="ui-list">
           <div class="list">
@@ -52,18 +49,42 @@
             </div>
           </div>
 
-          <h6 th:text="|${user.getTitle()}님 환영합니다|"></h6>
           <div class="list">
             <div class="list-object">
               <table>
                 <tbody>
                   <tr th:each="item : ${list}">
                     <ul>
-                      <li><p class="post-object"><a th:text="${item.getId()}"></a></p></li>
-                      <li><h3><a th:href="|/view/${item.getId()}|"><p class="post-object" th:text="${item.getTitle()}"></p></a></h3></li>
-                      <li><p class="post-object"><a th:text="${item.getAuthor()}"></a></p></li>
-                      <li><p class="post-object"><a th:text="${item.getReadCount()}"></a></p></li>
-                      <li><p class="post-object"><a th:text="${item.getCreatedAt()}"></a></p></li>
+                      <li>
+                        <p class="post-object">
+                          <a th:text="${item.getId()}"></a>
+                        </p>
+                      </li>
+                      <li>
+                        <h3>
+                          <a th:href="|/view/${item.getId()}|"
+                            ><p
+                              class="post-object"
+                              th:text="${item.getTitle()}"
+                            ></p
+                          ></a>
+                        </h3>
+                      </li>
+                      <li>
+                        <p class="post-object">
+                          <a th:text="${item.getAuthor()}"></a>
+                        </p>
+                      </li>
+                      <li>
+                        <p class="post-object">
+                          <a th:text="${item.getReadCount()}"></a>
+                        </p>
+                      </li>
+                      <li>
+                        <p class="post-object">
+                          <a th:text="${item.getCreatedAt()}"></a>
+                        </p>
+                      </li>
                     </ul>
                   </tr>
                 </tbody>
@@ -76,10 +97,9 @@
           <a class="button" href="/write">글 쓰기</a>
         </div>
 
-        <br><br>
-
+        <br /><br />
       </div>
     </div>
-  <div th:replace="global/nav :: footer"></div>
-</body>
+    <div th:replace="global/nav :: footer"></div>
+  </body>
 </html>
