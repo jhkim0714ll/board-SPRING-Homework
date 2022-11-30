@@ -20,15 +20,12 @@
     </div>
 
     <ul class="navbar__menu">
-      <li id="registerButton" onclick="window.location.href='/user/register'">
-        <a>회원가입</a>
-      </li>
       <li
         id="loginButton"
         th:if="${login == false}"
         onclick="window.location.href='/user/login'"
       >
-        <a>로그인</a>
+        로그인
       </li>
       <li
         id="logoutButton"

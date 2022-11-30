@@ -1,0 +1,72 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+h1{
+    color: rgba(98, 169, 255, 0.53);
+}
+
+form {
+    width: 408px;
+    padding: 40px 48px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid #c6c6c6;
+    margin-bottom: 40px;
+}
+.input_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input {
+    width: calc(100% - 30px);
+    border: 1px solid #dadada;
+    padding: 15px;
+    outline: none;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+#name:focus {
+    border: 1px solid rgba(98, 169, 255, 0.53);
+}
+#id:focus {
+    border: 1px solid rgba(98, 169, 255, 0.53);
+}
+#pw:focus {
+    border: 1px solid rgba(98, 169, 255, 0.53);
+}
+.input_wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 20px;
+}
+button {
+    width: 100%;
+    outline: none;
+    background-color: rgba(98, 169, 255, 0.53);
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    height: 50px;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+}
+.move_login{
+    width: 100%;
+    margin-top: 20px;
+}

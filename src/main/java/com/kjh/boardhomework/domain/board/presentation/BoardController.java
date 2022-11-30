@@ -95,11 +95,10 @@ public class BoardController {
 
     @GetMapping("/list")
     public String listBoardPage(
-            Model model,
-            HttpServletRequest request
+            Model model
     ) {
         UserEntity user = userFacade.getCurrentUser();
-        if(user == null) {
+        if(user.getId() == null) {
             model.addAttribute("login", false);
         } else {
             model.addAttribute("login", true);

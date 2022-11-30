@@ -20,6 +20,6 @@ public class UserFacade {
 
     private UserEntity getUserByEmail(String id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+                .orElseGet(UserEntity::new);
     }
 }

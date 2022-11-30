@@ -4,7 +4,6 @@
     align-items: center;
     background-color: rgba(98, 169, 255, 0.53);
     padding: 8px 12px;
-    border: solid #D9D9D9;
 }
 
 body {
@@ -34,7 +33,7 @@ a {
     padding-left: 30px;
     padding-right: 30px;
     margin-left: 20px;
-    border: solid black;
+    border: solid rgb(98, 178, 255, 0.53);
     border-radius: 2px;
 }
 

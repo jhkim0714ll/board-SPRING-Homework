@@ -1,46 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/css/register.css" rel="stylesheet" />
+  <title>회원가입</title>
+
   </head>
   <body>
-    <script th:if="${alreadyExistsId != null}">
-      alert("아이디가 이미 존재합니다, 다른 아이디로 가입해주세요");
-    </script>
-    <form method="post" action="/user/register">
-      <input
-        id="id"
-        required
-        type="text"
-        maxlength="100"
-        autofocus="autofocus"
-        placeholder="아이디를 입력해주세요"
-        name="id"
-        th:value="*{id}"
-      />
-      <input
-        id="name"
-        required
-        type="text"
-        placeholder="이름을 입력해주세요"
-        name="name"
-        th:value="*{name}"
-      />
-      <input
-        id="password"
-        required
-        type="password"
-        placeholder="비밀번호를 입력해주세요"
-        name="password"
-        th:value="*{password}"
-      />
-      <button onclick="window.location.href='/user/register'">회원가입</button>
-    </form>
+  <h1>회원가입</h1>
+  <form method="post" action="/user/register">
+    <div class="input_container">
+      <div class="input_wrap">
+        <input id="name" name="name" type="text" placeholder="이름" />
+        <input id="id" name="id" type="text" placeholder="아이디" />
+        <input id="pw" name="password" type="password" placeholder="비밀번호" />
+      </div>
+      <button>회원가입</button>
+    </div>
+    <div class="move_login">
+      회원이시라면..?
+      <a href="login">로그인</a>
+    </div>
+  </form>
   </body>
-</html>
+  </html>

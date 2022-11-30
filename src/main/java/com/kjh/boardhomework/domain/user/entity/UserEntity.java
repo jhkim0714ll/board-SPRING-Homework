@@ -21,14 +21,10 @@ public class UserEntity {
 
     private String password;
 
-    @Nullable
-    private Date lastLoginTime;
-
     @Builder
-    public UserEntity(String id, String name, String password, Date lastLoginTime){
+    public UserEntity(String id, String name, String password){
         this.id = id;
         this.name = name;
         this.password = password;
-        this.lastLoginTime = lastLoginTime;
     }
 }
