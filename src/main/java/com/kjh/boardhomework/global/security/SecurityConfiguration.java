@@ -1,7 +1,6 @@
 package com.kjh.boardhomework.global.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kjh.boardhomework.global.security.jwt.JwtTokenParser;
+import com.kjh.boardhomework.global.security.handler.LoginErrorHandler;
 import com.kjh.boardhomework.global.security.principle.AuthDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,8 +17,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final AuthDetailsService authDetailsService;
-    private final JwtTokenParser jwtTokenParser;
-    private final ObjectMapper objectMapper;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,7 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/user/login")
                 .defaultSuccessUrl("/list")
                 .usernameParameter("id")
-                .permitAll();
+                .permitAll()
+                .failureHandler(loginErrorHandler());
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
@@ -50,6 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(authDetailsService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public LoginErrorHandler loginErrorHandler(){
+        return new LoginErrorHandler();
     }
 
     @Bean

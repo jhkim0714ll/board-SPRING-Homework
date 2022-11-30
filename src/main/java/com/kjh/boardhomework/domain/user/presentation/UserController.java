@@ -20,7 +20,16 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "exception", required = false) String message,
+            HttpServletRequest request
+    ) {
+        if(error != null) {
+            if(error.equals("true")) {
+                request.setAttribute("exception", message);
+            }
+        }
         return "user/login";
     }
 
@@ -31,17 +40,9 @@ public class UserController {
             @RequestParam("id") String id,
             @RequestParam("password") String password
     ) {
-
         LoginRequest loginRequest = new LoginRequest(id, password);
 
         String token = userService.login(loginRequest);
-        if(token.equals("IdNotFound")) {
-            request.setAttribute("idNotFound", true);
-            return "user/login";
-        } else if (token.equals("wrongPassword")) {
-            request.setAttribute("wrongPassword", true);
-            return "user/login";
-        }
 
         Cookie cookie = new Cookie("token", token);
         cookie.setPath("/");
