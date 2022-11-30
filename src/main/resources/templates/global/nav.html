@@ -23,17 +23,11 @@
       <li
         id="loginButton"
         th:if="${login == false}"
-        onclick="window.location.href='/user/login'"
-      >
-        로그인
-      </li>
+        onclick="window.location.href='/user/login'">로그인</li>
       <li
         id="logoutButton"
         th:if="${login == true}"
-        onclick="logout()"
-      >
-        <a>로그아웃</a>
-      </li>
+        onclick="logout()">로그아웃</li>
     </ul>
 
     <script>

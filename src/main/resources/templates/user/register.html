@@ -10,6 +10,9 @@
   </head>
   <body>
   <h1>회원가입</h1>
+  <script th:if="${alreadyExistsId != null}">
+    alert("아이디가 이미 존재합니다, 다른 아이디로 가입해주세요");
+  </script>
   <form method="post" action="/user/register">
     <div class="input_container">
       <div class="input_wrap">
